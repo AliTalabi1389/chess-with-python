@@ -1,0 +1,3 @@
+WIDTH = 750
+HEIGHT = 750
+TITLE = 'chess'
