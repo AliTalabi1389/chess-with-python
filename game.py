@@ -1,4 +1,5 @@
 from pieces import *
+from choese_piece import *
 
 class Game:
     def __init__(self):
@@ -34,6 +35,7 @@ class Game:
         self.bp6 = BlackPawn6()
         self.bp7 = BlackPawn7()
         self.bp8 = BlackPawn8()
+        self.chose_blank = ChosePiece()
 
     def draw(self):
         self.wk.draw_piece()
@@ -68,6 +70,7 @@ class Game:
         self.bp6.draw_piece()
         self.bp7.draw_piece()
         self.bp8.draw_piece()
+        # self.chose_blank.draw_blank()
 
     def update(self):
         self.wk.update_piece()
@@ -102,6 +105,7 @@ class Game:
         self.bp6.update_piece()
         self.bp7.update_piece()
         self.bp8.update_piece()
+        # self.chose_blank.update_blank()
 
     def check_mouse_down(self, pos):
         self.wk.check_click(pos)
