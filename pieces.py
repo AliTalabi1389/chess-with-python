@@ -1,9 +1,10 @@
 from map import *
 from pgzero.actor import Actor
-from choese_piece import *
+from game import *
+from path_finding_actors import *
 
 class Pieces:
-    def __init__(self, image=None, position=None, status=None, name=None, type_piece=None, rotation_bool=None, selected_image=None):
+    def __init__(self, image=None, position=None, status=None, name=None, type_piece=None, rotation_bool=None, selected_image=None, movement_type=None):
         self.image = image
         self.position = position
         self.status = status
@@ -15,6 +16,8 @@ class Pieces:
         self.arrangement_lock_bool = True
         self.rotation_bool = rotation_bool
         self.selected_image = selected_image
+        self.mini_map_pos = ()
+        self.movement_type = movement_type
 
     def define_actor(self):
         if self.actor_define_lock_bool:
@@ -34,7 +37,7 @@ class Pieces:
                     for i, xy in enumerate(pos):
 
                         # if i == 1:
-                         self.one_piece_pos = self.one_piece_pos +((xy + 1) * 75 + (75 / 2), )
+                        self.one_piece_pos = self.one_piece_pos +((xy + 1) * 75 + (75 / 2), )
 
                         # else:
                         #     self.one_piece_pos = self.one_piece_pos + ((xy + 1) * 75 + (75 / 2) - 1, )
@@ -49,12 +52,22 @@ class Pieces:
             if self.name.collidepoint(pos):
                 self.name.image = self.selected_image
 
+
             else:
                 self.name.image = self.image
+
+    def get_mini_map_position(self):
+        self.mini_map_pos = ()
+
+        for pos in self.name.pos:
+            self.mini_map_pos = self.mini_map_pos + ((pos - (225 / 2)) / 75, )
+
+        return self.mini_map_pos
 
     def update_piece(self):
         self.define_actor()
         self.arrangement()
+        self.get_mini_map_position()
 
     def draw_piece(self):
         self.name.draw()
@@ -94,8 +107,8 @@ class WhiteRook2(Pieces):
         super().__init__(image, position, status, name, type_piece, rotation_bool, selected_image)
 
 class WhitePawn1(Pieces):
-    def __init__(self, image='white_pawn', position=None, status='alive', name=None, type_piece='P1', rotation_bool=False, selected_image='selected_white_pawn'):
-        super().__init__(image, position, status, name, type_piece, rotation_bool, selected_image)
+    def __init__(self, image='white_pawn', position=None, status='alive', name=None, type_piece='P1', rotation_bool=False, selected_image='selected_white_pawn', movement_type='pawn'):
+        super().__init__(image, position, status, name, type_piece, rotation_bool, selected_image, movement_type)
 
 class WhitePawn2(Pieces):
     def __init__(self, image='white_pawn', position=None, status='alive', name=None, type_piece='P2', rotation_bool=False, selected_image='selected_white_pawn'):
